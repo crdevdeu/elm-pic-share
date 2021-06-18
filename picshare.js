@@ -5167,17 +5167,12 @@ var $elm$browser$Browser$sandbox = function (impl) {
 			view: impl.view
 		});
 };
+var $elm$core$Basics$not = _Basics_not;
 var $author$project$Picshare$update = F2(
 	function (msg, model) {
-		if (msg.$ === 'Like') {
-			return _Utils_update(
-				model,
-				{liked: true});
-		} else {
-			return _Utils_update(
-				model,
-				{liked: false});
-		}
+		return _Utils_update(
+			model,
+			{liked: !model.liked});
 	});
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
@@ -5192,11 +5187,16 @@ var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $author$project$Picshare$Like = {$: 'Like'};
-var $author$project$Picshare$Unlike = {$: 'Unlike'};
 var $elm$html$Html$h2 = _VirtualDom_node('h2');
-var $elm$html$Html$i = _VirtualDom_node('i');
 var $elm$html$Html$img = _VirtualDom_node('img');
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
+};
+var $author$project$Picshare$ToggleLike = {$: 'ToggleLike'};
+var $elm$html$Html$i = _VirtualDom_node('i');
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 'Normal', a: a};
 };
@@ -5214,15 +5214,28 @@ var $elm$html$Html$Events$onClick = function (msg) {
 		'click',
 		$elm$json$Json$Decode$succeed(msg));
 };
-var $elm$html$Html$Attributes$src = function (url) {
+var $author$project$Picshare$viewLoveButton = function (model) {
+	var buttonClass = model.liked ? 'fa-heart' : 'fa-heart-o';
 	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'src',
-		_VirtualDom_noJavaScriptOrHtmlUri(url));
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('like-button')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$i,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('fa fa-2x'),
+						$elm$html$Html$Attributes$class(buttonClass),
+						$elm$html$Html$Events$onClick($author$project$Picshare$ToggleLike)
+					]),
+				_List_Nil)
+			]));
 };
 var $author$project$Picshare$viewDetailedPhoto = function (model) {
-	var msg = model.liked ? $author$project$Picshare$Unlike : $author$project$Picshare$Like;
-	var buttonClass = model.liked ? 'fa-heart' : 'fa-heart-o';
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
@@ -5246,24 +5259,7 @@ var $author$project$Picshare$viewDetailedPhoto = function (model) {
 					]),
 				_List_fromArray(
 					[
-						A2(
-						$elm$html$Html$div,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('like-button')
-							]),
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$i,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$class('fa fa-2x'),
-										$elm$html$Html$Attributes$class(buttonClass),
-										$elm$html$Html$Events$onClick(msg)
-									]),
-								_List_Nil)
-							])),
+						$author$project$Picshare$viewLoveButton(model),
 						A2(
 						$elm$html$Html$h2,
 						_List_fromArray(
