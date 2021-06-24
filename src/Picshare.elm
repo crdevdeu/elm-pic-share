@@ -7,8 +7,16 @@ import Html.Attributes exposing (class, disabled, placeholder, src, type_, value
 import Html.Events exposing (onClick, onInput, onSubmit)
 
 
+type alias Photo =
+    { id : Id, url : String, caption : String, liked : Bool, comments : List String, newComment : String }
+
+
 type alias Model =
-    { url : String, caption : String, liked : Bool, comments : List String, newComment : String }
+    Photo
+
+
+type alias Id =
+    Int
 
 
 baseUrl : String
@@ -18,7 +26,8 @@ baseUrl =
 
 initialModel : Model
 initialModel =
-    { url = baseUrl ++ "1.jpg"
+    { id = 1
+    , url = baseUrl ++ "1.jpg"
     , caption = "Party time cool dude"
     , liked = False
     , comments = [ "Hey man" ]
